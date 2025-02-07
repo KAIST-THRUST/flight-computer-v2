@@ -7,3 +7,4 @@
 #pragma once
 
 #include "AnalogSensorTypes.h"
+#include "AnalogSensorManager.h"
