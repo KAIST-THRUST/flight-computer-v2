@@ -10,6 +10,9 @@
 #include <ADC.h>
 #include <Config.h>
 
+#define MAX_NUM_OF_SENSORS DAQ_NUM_OF_SENSORS
+#define DEFAULT_ADC_RESOLUTION DAQ_ADC_RESOLUTION
+
 /**
  * @brief A class to manage and synchronize readings from multiple analog
  * sensors.

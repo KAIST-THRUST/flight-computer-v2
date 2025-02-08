@@ -9,9 +9,6 @@
 #include <Arduino.h>
 #include <Config.h>
 
-#define MAX_NUM_OF_SENSORS DAQ_NUM_OF_SENSORS
-#define DEFAULT_ADC_RESOLUTION DAQ_ADC_RESOLUTION
-
 /**
  * @brief A data structure that represents an analog sensor multiplexer.
  * @details This class is used to control the CD74HC4067 multiplexer.
@@ -94,5 +91,5 @@ public:
    * @param raw_data The raw sensor data.
    * @return The converted sensor value.
    */
-  virtual double getSensorData(int raw_data) = 0;
+  virtual const double getSensorData(int raw_data) const = 0;
 };
