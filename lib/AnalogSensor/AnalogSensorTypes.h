@@ -94,5 +94,5 @@ public:
    * @param raw_data The raw sensor data.
    * @return The converted sensor value.
    */
-  virtual double getSensorData(int raw_data) = 0;
+  virtual const double getSensorData(int raw_data) const = 0;
 };
