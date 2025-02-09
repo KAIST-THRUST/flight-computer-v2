@@ -27,10 +27,10 @@ private:
   double sensor_data[MAX_NUM_OF_SENSORS];
 
   // Array for A0 sensor indices.
-  int a0_sensors[MAX_NUM_OF_SENSORS];
+  int group_a0[MAX_NUM_OF_SENSORS];
 
   // Array for A1 sensor indices.
-  int a1_sensors[MAX_NUM_OF_SENSORS];
+  int group_a1[MAX_NUM_OF_SENSORS];
 
   ADC *adc;
   uint8_t num_of_sensors;
@@ -40,6 +40,8 @@ private:
   bool isA0Sensor(AnalogSensor *sensor) const;
   bool isA1Sensor(AnalogSensor *sensor) const;
   bool isA0A1Sensor(AnalogSensor *sensor) const;
+  bool isInGroupA0(AnalogSensor *sensor) const;
+  bool isInGroupA1(AnalogSensor *sensor) const;
 
   /**
    * @brief Sets the multiplexer channel if necessary.

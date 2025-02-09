@@ -1,7 +1,7 @@
 /**
  * @file AnalogSensorManager.cpp
  * @brief Implementation of the AnalogSensorManager class.
- * 
+ *
  */
 
 #include "AnalogSensorManager.h"
@@ -35,6 +35,24 @@ bool AnalogSensorManager::isA1Sensor(AnalogSensor *sensor) const {
   return false;
 }
 
+bool AnalogSensorManager::isInGroupA0(AnalogSensor *sensor) const {
+  for (int i = 0; i < num_of_a0_sensor; i++) {
+    if (sensors[group_a0[i]]->pin_num == sensor->pin_num) {
+      return true;
+    }
+  }
+  return false;
+}
+
+bool AnalogSensorManager::isInGroupA1(AnalogSensor *sensor) const {
+  for (int i = 0; i < num_of_a1_sensor; i++) {
+    if (sensors[group_a1[i]]->pin_num == sensor->pin_num) {
+      return true;
+    }
+  }
+  return false;
+}
+
 bool AnalogSensorManager::addSensor(AnalogSensor *sensor) {
   if (num_of_sensors >= MAX_NUM_OF_SENSORS) {
     return false;
@@ -43,15 +61,19 @@ bool AnalogSensorManager::addSensor(AnalogSensor *sensor) {
 
   // Greedy assignment of A0 and A1 sensors.
   if (isA0A1Sensor(sensor)) {
-    if (num_of_a0_sensor <= num_of_a1_sensor) {
-      a0_sensors[num_of_a0_sensor++] = num_of_sensors;
+    if (isInGroupA0(sensor)) {
+      group_a0[num_of_a0_sensor++] = num_of_sensors;
+    } else if (isInGroupA1(sensor)) {
+      group_a1[num_of_a1_sensor++] = num_of_sensors;
+    } else if (num_of_a0_sensor <= num_of_a1_sensor) {
+      group_a0[num_of_a0_sensor++] = num_of_sensors;
     } else {
-      a1_sensors[num_of_a1_sensor++] = num_of_sensors;
+      group_a1[num_of_a1_sensor++] = num_of_sensors;
     }
   } else if (isA0Sensor(sensor)) {
-    a0_sensors[num_of_a0_sensor++] = num_of_sensors;
+    group_a0[num_of_a0_sensor++] = num_of_sensors;
   } else if (isA1Sensor(sensor)) {
-    a1_sensors[num_of_a1_sensor++] = num_of_sensors;
+    group_a1[num_of_a1_sensor++] = num_of_sensors;
   }
 
   // Update the total number of sensors.
@@ -84,32 +106,32 @@ void AnalogSensorManager::updateSensorData() {
 
   // Read sensor pairs synchronously.
   for (int i = 0; i < pair_count; i++) {
-    AnalogSensor *sA0 = sensors[a0_sensors[i]];
-    AnalogSensor *sA1 = sensors[a1_sensors[i]];
+    AnalogSensor *sA0 = sensors[group_a0[i]];
+    AnalogSensor *sA1 = sensors[group_a1[i]];
 
     setMuxIfNeeded(sA0);
     setMuxIfNeeded(sA1);
 
     ADC::Sync_result result =
         adc->analogSyncRead(sA0->pin_num, sA1->pin_num);
-    sensor_data[a0_sensors[i]] = sA0->getSensorData(result.result_adc0);
-    sensor_data[a1_sensors[i]] = sA1->getSensorData(result.result_adc1);
+    sensor_data[group_a0[i]] = sA0->getSensorData(result.result_adc0);
+    sensor_data[group_a1[i]] = sA1->getSensorData(result.result_adc1);
   }
 
   // Process leftover sensors from the channel with more sensors.
   if (num_of_a0_sensor > num_of_a1_sensor) {
     for (int i = pair_count; i < num_of_a0_sensor; i++) {
-      AnalogSensor *s = sensors[a0_sensors[i]];
+      AnalogSensor *s = sensors[group_a0[i]];
       setMuxIfNeeded(s);
       int raw_data = adc->analogRead(s->pin_num);
-      sensor_data[a0_sensors[i]] = s->getSensorData(raw_data);
+      sensor_data[group_a0[i]] = s->getSensorData(raw_data);
     }
   } else if (num_of_a1_sensor > num_of_a0_sensor) {
     for (int i = pair_count; i < num_of_a1_sensor; i++) {
-      AnalogSensor *s = sensors[a1_sensors[i]];
+      AnalogSensor *s = sensors[group_a1[i]];
       setMuxIfNeeded(s);
       int raw_data = adc->analogRead(s->pin_num);
-      sensor_data[a1_sensors[i]] = s->getSensorData(raw_data);
+      sensor_data[group_a1[i]] = s->getSensorData(raw_data);
     }
   }
 }
