@@ -1,11 +1,26 @@
 #include "Utils.h"
 
+// power function.
 int power(int base, int exponent)
 {
-    int result = 1;
-    for (int i = 0; i < exponent; i++)
+    /*    int result = 1;
+        for (int i = 0; i < exponent; i++)
+        {
+            result = result * base;
+        }
+        return result;
+    */
+    if (exponent == 0)
     {
-        result = result * base;
+        return 1;
     }
-    return result;
+
+    if (exponent & 1 == 0)
+    {
+        return power(base * base, exponent / 2);
+    }
+    else
+    {
+        return base * power(base * base, exponent / 2);
+    }
 }
