@@ -1,6 +1,6 @@
 #include "Utils.h"
 
-// power function
+// power function.
 int power(int base, int exponent)
 {
     /*    int result = 1;
