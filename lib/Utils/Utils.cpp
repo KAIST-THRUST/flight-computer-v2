@@ -24,3 +24,5 @@ int power(int base, int exponent)
         return base * power(base * base, exponent / 2);
     }
 }
+
+double psi2bar(double pressure_data){ return pressure_data/14.503773773; }
