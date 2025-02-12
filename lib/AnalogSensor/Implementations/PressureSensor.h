@@ -17,7 +17,6 @@
  * @note This class controls the M325M-000005-01KPG pressure sensor.
  */
 class LowRangePressureSensor : public AnalogSensor {
-  constexpr int ADC_max = power(2,DAQ_ADC_RESOLUTION) - 1;
 public:
   LowRangePressureSensor(uint8_t pin_num) : AnalogSensor(pin_num) {}
   LowRangePressureSensor(AnalogSensorMux *mux, uint8_t mux_pin_num)
@@ -32,7 +31,6 @@ public:
  * @note This class controls the MLH02KPSP01B pressure sensor.
  */
 class HighRangePressureSensor : public AnalogSensor {
-  constexpr int ADC_max = power(2,DAQ_ADC_RESOLUTION) - 1;
 public:
   HighRangePressureSensor(uint8_t pin_num) : AnalogSensor(pin_num) {}
   HighRangePressureSensor(AnalogSensorMux *mux, uint8_t mux_pin_num)
