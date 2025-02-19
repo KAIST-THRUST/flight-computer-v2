@@ -1,7 +1,7 @@
 /**
  * @file SolenoidValve.h
  * @brief A class for controlling a solenoid valve.
- * 
+ *
  */
 
 #pragma once
@@ -17,16 +17,25 @@
 class SolenoidValve {
 private:
   const uint8_t pin_num; // Digital pin number connected.
+  bool is_open;          // Whether the valve is open or not.
 
 public:
-  SolenoidValve(uint8_t pin_num) : pin_num(pin_num) {}
+  SolenoidValve(uint8_t pin_num) : pin_num(pin_num), is_open(0) {}
 
   void begin() const {
     pinMode(pin_num, OUTPUT);
     digitalWriteFast(pin_num, LOW);
   }
 
-  void open() const { digitalWriteFast(pin_num, HIGH); }
+  void open() {
+    digitalWriteFast(pin_num, HIGH);
+    is_open = true;
+  }
 
-  void close() const { digitalWriteFast(pin_num, LOW); }
+  void close() {
+    digitalWriteFast(pin_num, LOW);
+    is_open = false;
+  }
+
+  bool isOpen() const { return is_open; }
 };
