@@ -29,5 +29,5 @@ void BallValve::open(int angle) {
 
 
 int BallValve::showAngle() {
-    servo.read();
+    return servo.read();
 }
