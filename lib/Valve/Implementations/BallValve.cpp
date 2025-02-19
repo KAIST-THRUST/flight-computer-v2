@@ -14,7 +14,7 @@ void BallValve::open() {
     servo.write(90);
 
 }
-void BallValve::half_open() {
+void BallValve::halfOpen() {
     servo.write(45);
 }
 
@@ -22,3 +22,12 @@ void BallValve::close() {
     servo.write(0);
 }
 
+
+void BallValve::open(int angle) {
+    servo.write(angle);
+}
+
+
+int BallValve::showAngle() {
+    servo.read();
+}

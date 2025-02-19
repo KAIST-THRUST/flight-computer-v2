@@ -15,8 +15,12 @@ class BallValve{
     void begin();
 
     void open();
-    void half_open();
+    void halfOpen();
     void close();
+
+    void open(int angle);
+
+    int showAngle();
 
 };
 
