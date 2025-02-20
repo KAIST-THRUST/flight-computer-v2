@@ -11,28 +11,16 @@ AnalogSensorManager::AnalogSensorManager()
       num_of_a1_sensor(0) {}
 
 bool AnalogSensorManager::isA0A1Sensor(AnalogSensor *sensor) const {
-  if ((sensor->pin_num >= 14 && sensor->pin_num <= 23) ||
-      sensor->pin_num == 40 || sensor->pin_num == 41) {
-    return true;
-  }
-  return false;
+  return adc->adc0->checkPin(sensor->pin_num) &&
+         adc->adc1->checkPin(sensor->pin_num);
 }
 
 bool AnalogSensorManager::isA0Sensor(AnalogSensor *sensor) const {
-  if (isA0A1Sensor(sensor) || sensor->pin_num == 24 ||
-      sensor->pin_num == 25) {
-    return true;
-  }
-  return false;
+  return adc->adc0->checkPin(sensor->pin_num);
 }
 
 bool AnalogSensorManager::isA1Sensor(AnalogSensor *sensor) const {
-  if (isA0A1Sensor(sensor) || sensor->pin_num == 26 ||
-      sensor->pin_num == 27 || sensor->pin_num == 38 ||
-      sensor->pin_num == 39) {
-    return true;
-  }
-  return false;
+  return adc->adc1->checkPin(sensor->pin_num);
 }
 
 bool AnalogSensorManager::isInGroupA0(AnalogSensor *sensor) const {
