@@ -9,3 +9,4 @@
 #include "AnalogSensorManager.h"
 #include "AnalogSensorTypes.h"
 #include "Implementations/PressureSensor.h"
+#include "Implementations/Thermocouple.h"

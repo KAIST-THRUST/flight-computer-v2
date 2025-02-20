@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include "AnalogSensorTypes.h"
+#include "../AnalogSensorTypes.h"
 
 /**
  * @brief A class to read K-type thermocouple sensor using AD8495
