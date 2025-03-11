@@ -1,7 +1,7 @@
 /**
  * @file Thermocouple.h
  * @brief A class to read various types of thermocouple sensors.
- * 
+ *
  */
 
 #pragma once
@@ -13,7 +13,7 @@
  * amplifier.
  *
  */
-class KTypeThermocoupleHigh: public AnalogSensor {
+class KTypeThermocoupleHigh : public AnalogSensor {
 public:
   KTypeThermocoupleHigh(uint8_t pin_num) : AnalogSensor(pin_num) {}
   KTypeThermocoupleHigh(AnalogSensorMux *mux, uint8_t mux_pin_num)
@@ -28,10 +28,10 @@ public:
  *
  */
 class KTypeThermocoupleLow : public AnalogSensor {
-  public:
-    KTypeThermocoupleLow(uint8_t pin_num) : AnalogSensor(pin_num) {}
-    KTypeThermocoupleLow(AnalogSensorMux *mux, uint8_t mux_pin_num)
-        : AnalogSensor(mux, mux_pin_num) {}
-  
-    const double getSensorData(int raw_data) const override;
-  };
+public:
+  KTypeThermocoupleLow(uint8_t pin_num) : AnalogSensor(pin_num) {}
+  KTypeThermocoupleLow(AnalogSensorMux *mux, uint8_t mux_pin_num)
+      : AnalogSensor(mux, mux_pin_num) {}
+
+  const double getSensorData(int raw_data) const override;
+};
