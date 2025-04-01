@@ -3,12 +3,6 @@
 #include <Arduino.h>
 #include <Servo.h>
 
-#undef MIN_PULSE_WIDTH;
-#undef MAX_PULSE_WIDTH;
-
-#define MIN_PULSE_WIDTH       500     
-#define MAX_PULSE_WIDTH      2500     
-//PWM pulse width range for https://www.amazon.com/Torque-Motors-Waterproof-Steering-Control/dp/B073F92G2S?th=1
 
 class BallValve{
 
