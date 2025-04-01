@@ -12,15 +12,15 @@ class BallValve{
 
     public:
     BallValve(uint8_t BallValve_pin_num);
-    void begin();
+    void begin();   //set servo pin and initialize angle to 0 degrees
 
-    void open();
-    void halfOpen();
-    void close();
+    void open();    //servo to 90 degrees
+    void halfOpen();    //servo to 45 degrees
+    void close();   //servo to 0 degrees
 
-    void open(int angle);
+    void open(int angle);   //open to a specific angle(in degrees, 0~180)
 
-    int showAngle();
+    int showAngle();    //return servo angle in degrees
 
 };
 
