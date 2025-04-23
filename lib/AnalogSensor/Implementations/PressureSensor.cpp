@@ -1,17 +1,15 @@
 #include "PressureSensor.h"
 
-const double LowRangePressureSensor::getSensorData(int raw_data) const
-{
-  /* TODO: Implement the conversion from raw data to pressure for the low
-  range sensor. */
-  double LowRangePressure_result = static_cast<double>(raw_data) / static_cast<double>(DAQ_ADC_MAX) * psi2bar(1000);
-  return LowRangePressure_result;
+const double LowRangePressureSensor::getSensorData(int raw_data) const {
+  double voltage = map((double)raw_data, 0, DAQ_ADC_MAX, 0.0, 3.3);
+  double current = voltage / 150.0;
+  double pressure = map(current, 0.004, 0.020, 0.0, 1000);
+  return psi2bar(pressure);
 }
 
-const double HighRangePressureSensor::getSensorData(int raw_data) const
-{
-  /* TODO: Implement the conversion from raw data to pressure for the high
-  range sensor. */
-  double HighRangePressure_result = static_cast<double>(raw_data) / static_cast<double>(DAQ_ADC_MAX) * psi2bar(2000);
-  return HighRangePressure_result;
+const double HighRangePressureSensor::getSensorData(int raw_data) const {
+  double voltage = map((double)raw_data, 0, DAQ_ADC_MAX, 0.0, 3.3);
+  double current = voltage / 150.0;
+  double pressure = map(current, 0.004, 0.020, 0.0, 2000);
+  return psi2bar(pressure);
 }
