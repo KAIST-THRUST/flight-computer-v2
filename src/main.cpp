@@ -2,16 +2,15 @@
 
 #include <AnalogSensor.h>
 #include <Config.h>
+#include <Logger.h>
 
-constexpr uint8_t PT1_PIN = A0;
-constexpr uint8_t PT2_PIN = A1;
-constexpr uint8_t TT1_PIN = A2;
-constexpr uint8_t TT2_PIN = A3;
+AnalogSensorMux mux0(14, 20, 21, 22, 23);
+AnalogSensorMux mux1(15, 20, 21, 22, 23);
 
-LowRangePressureSensor pt1(PT1_PIN);
-HighRangePressureSensor pt2(PT2_PIN);
-KTypeThermocoupleHigh tt1(TT1_PIN);
-KTypeThermocoupleLow tt2(TT2_PIN);
+KTypeThermocoupleLow tt1(&mux0, 0);
+KTypeThermocoupleHigh tt2(&mux0, 1);
+LowRangePressureSensor pt1(&mux1, 0);
+HighRangePressureSensor pt2(&mux1, 1);
 AnalogSensorManager sensor_manager;
 
 void setup() {
