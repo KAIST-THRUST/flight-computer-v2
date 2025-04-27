@@ -1,30 +1,38 @@
-// A simple example of using the AnalogSensor library to read data.
+// A simple example of testing each unit of the DAQ.
 
 #include <AnalogSensor.h>
 #include <Config.h>
 #include <Logger.h>
+#include <Valve.h>
 
 AnalogSensorMux mux0(14, 20, 21, 22, 23);
 AnalogSensorMux mux1(15, 20, 21, 22, 23);
 
-KTypeThermocoupleLow tt1(&mux0, 0);
-KTypeThermocoupleHigh tt2(&mux0, 1);
+KTypeThermocoupleHigh tt1(&mux0, 0);
+KTypeThermocoupleLow tt2(&mux0, 1);
 LowRangePressureSensor pt1(&mux1, 0);
 HighRangePressureSensor pt2(&mux1, 1);
 AnalogSensorManager sensor_manager;
+BallValve valve(8);
+SolenoidValve sv(28);
 
 void setup() {
   Serial.begin(115200);
-  delay(2000);
+  mux0.begin();
+  mux1.begin();
   sensor_manager.begin();
   sensor_manager.addSensor(&pt1);
   sensor_manager.addSensor(&pt2);
   sensor_manager.addSensor(&tt1);
   sensor_manager.addSensor(&tt2);
+  valve.begin(30);
+  sv.begin();
+  delay(2000);
 }
 
 void loop() {
-  sensor_manager.updateSensorData();
+  // Analog sensor test.
+  sensor_manager.updateSensorData(); // Fetches sensor data from the sensors.
   const double *data_arr = sensor_manager.getSensorData();
   Serial.print("PT1: ");
   Serial.print(data_arr[0]);
@@ -34,5 +42,20 @@ void loop() {
   Serial.print(data_arr[2]);
   Serial.print(" TT2: ");
   Serial.println(data_arr[3]);
-  delay(1000);
+
+  // Ball valve test.
+  valve.open(0);
+  Serial.println(valve.showAngle());
+  delay(2000);
+  valve.open(90);
+  Serial.println(valve.showAngle());
+  delay(2000);
+
+  // Solenoid valve test.
+  sv.open();
+  Serial.println(sv.isOpen() ? "Open" : "Closed");
+  delay(500);
+  sv.close();
+  Serial.println(sv.isOpen() ? "Open" : "Closed");
+  delay(500);
 }
