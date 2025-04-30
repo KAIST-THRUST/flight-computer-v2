@@ -25,7 +25,7 @@ void setup() {
   sensor_manager.addSensor(&pt2);
   sensor_manager.addSensor(&tt1);
   sensor_manager.addSensor(&tt2);
-  valve.begin(30);
+  valve.begin();
   sv.begin();
   delay(2000);
 }

@@ -2,12 +2,12 @@
 
 
 
-BallValve::BallValve(uint8_t BallValve_pin_num) : pin_num(BallValve_pin_num)    {}
+BallValve::BallValve(uint8_t BallValve_pin_num,int offset_setting) : pin_num(BallValve_pin_num), offset(offset_setting)    {}
+BallValve::BallValve(uint8_t BallValve_pin_num) : pin_num(BallValve_pin_num), offset(52)    {}
 
 
-void BallValve::begin(int offset_setting) {
+void BallValve::begin() {
     servo.attach(pin_num,500,2500); //PWM pulse width range for https://www.amazon.com/Torque-Motors-Waterproof-Steering-Control/dp/B073F92G2S?th=1
-    offset=offset_setting;
     servo.write(0+offset);
 }
 

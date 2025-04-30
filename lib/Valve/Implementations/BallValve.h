@@ -12,8 +12,9 @@ class BallValve{
     int offset;
 
     public:
-    BallValve(uint8_t BallValve_pin_num);
-    void begin(int offset);   //set servo pin and initialize angle to 0 degrees
+    BallValve(uint8_t BallValve_pin_num); //constructor without offset setting, default offset is 52
+    BallValve(uint8_t BallValve_pin_num, int offset_setting); //constructor with offset setting
+    void begin();   //set servo pin and initialize angle to 0 degrees
 
     void open();    //servo to 90 degrees
     void halfOpen();    //servo to 45 degrees
